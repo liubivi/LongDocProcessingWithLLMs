@@ -6,20 +6,19 @@ This guide will walk you through creating a Zap (automated workflow) that mirror
 
 This particular Zap shows an example of how to **translate** the document, but the same process can be used for extracting any information from the provided text or process it in any way, depending on the instructions that you provide to LLMs.
 
-In the example, the Zap takes a new document in English and translates it to another language (e.g. Lithuanian). 
+In the example, the Zap takes a new document in English and translates it to another language (e.g. Lithuanian).
+
+Actions 4, 10 and 12 are optional, but nice to have for translation purposes, as it segments the text to sentences. Note that the splitting isn't ideal. Please, submit modifications.
 
 It starts the job when a new document is added to a Google Docs folder on a Google drive, chunks it to pieces using Python code, sends each piece to ChatGPT and Gemini, translates the document, and then saves the translated chunks to a Google spreadsheet.
 
 ## Step 1: Getting Started
 
 - Create an account on Google (https://drive.google.com), perhaps make a separate account just for this process to avoid any personal data leaks. 
-- Create a folder, e.g. "vertimo_originalai" ("originals of translations" in Lithuanian :-), in which we'll be dropping our new documents for processing, and a Google spreadsheet, e.g. "Vertimo_dokumentas" ("translated document"), in which we'll store the results. Create two worksheets there: "vertimas" ("translation" in Lithuanian) and "segmentai" ("segments" in Lithuanian)
-
-- Create a Google AI Studio account, and create an "API key" that will act as a sort of your password. Click a button "Get API key".
-- Create a https://platform.openai.com/ account, and create an "API key" on Dashboard/API keys.
-
-- Create an account on Zapier.com (or log in if you already have one).
-Click the "Create Zap" button.
+- Create a folder, e.g. "vertimo_originalai" ("originals of translations" in Lithuanian :-), in which we'll be dropping our new documents for processing, and a Google spreadsheet, e.g. "Vertimo_dokumentas" ("translated document"), in which we'll store the results. Create two worksheets there: "vertimas" ("translation" in Lithuanian) and "segmentai" ("segments" in Lithuanian).
+- Create a [Google AI Studio account](https://aistudio.google.com/), and create an "API key" that will act as a sort of your password. Click a button "Get API key".
+- Create an [Open AI account](https://platform.openai.com/), and create an "API key" on Dashboard/API keys.
+- Create a [Zapier account](https://www.zapier.com/) (or log in if you already have one). Click the "Create Zap" button.
 
 ## Step 2: Setting up the Trigger (When to start)
 
@@ -31,10 +30,8 @@ Trigger Event:
 Choose "New Document in Folder." This means the Zap will start whenever a new document is added to a folder.
 Connect Account: 
 Connect your Google Docs account to Zapier. You'll need to authorize Zapier to access your Google Docs.
-
 Customize Folder: 
 Select the specific folder in your Google Docs that you want Zapier to monitor for new documents, e.g. "vertimo_originalai"
-
 Test Trigger: 
 Zapier will test the connection to ensure it can see new documents in the folder.
 
@@ -95,7 +92,6 @@ text = input_data.get("text", "")
 chunks = chunk_text(text, max_chunk_size=1500)
 # Return the chunks
 return {"chunks": chunks}
-
 ```
 
 Your code receives the input data (e.g., text), chunks the content of the document into several chunks, based on the approximate number of characters that you indicate in the parameter "max_chunk_size=1500". Note that the splitting is not precise, and is done searching for ".","?","!" characters around the indicated character limit, to avoid splitting in the middle of the sentence.
@@ -109,16 +105,16 @@ Zapier will run your Python code with sample data to ensure it works correctly.
 
 Choose App: "Google Sheets"
 
-Action Event: Choose "Create Worksheet" and add the headings of the new worksheets ("new", because they will be replaced every time an action is triggered":
+Action Event: Choose "Create Worksheet" and add the headings of the new worksheets ("new", because they will be replaced every time an action is triggered"):
 
 -worksheet "vertimas"
 Original
 Gemini
 ChatGPT
 
-and
+[and Optional, but nice to have for translation purposes:]
 
--worksheet "segmentai"
+-worksheet "segmentai" 
 No
 Original
 Gemini
@@ -134,15 +130,12 @@ This step involves taking data that's been processed or transformed with python 
 Here's what you need to do:
 
 Action Event:
-
 The action event should be set to "Create Multiple Spreadsheet Rows." This tells Zapier you're adding more than one row at a time.
 Connect Account:
 If you haven't already connected your Google Sheets account in a previous step, you'll be prompted to do so. Click "Connect an Account" and authorize Zapier to access your Google Sheets.
-
 Choose Spreadsheet: Select the Google Sheet where you want to add the rows. Click the dropdown menu and choose the spreadsheet. 
 Choose Worksheet: Select the worksheet "vertimas" within the spreadsheet.
 Important: Make sure this worksheet exists in your Google Sheet. If it doesn't, create it in Google Sheets before proceeding. 
-
 Rows: This is where you tell Zapier which pieces of data go into which columns of your spreadsheet.
 This field is crucial for handling multiple rows.
 Set "Chunks" variable from the Python action to go to the worksheet "Original".
@@ -154,14 +147,11 @@ This step is all about repeating a set of actions for each item in a list. Imagi
 Here's how it works:
 
 Choose App: "Looping by Zapier"
-
 Action Event:
 The action event should be "Create Loop From Line Items." This tells Zapier you're creating a loop to process a list of items (chunks of text in our case).
 Input - Values to Loop:
-
 This is the most crucial part. You need to tell Zapier what list to loop through.
 Set the name of the Values to Loop to "Chunks" and then chose a field "Rows COL A" from the spreadsheet "vertimas".
-
 Chunks: This refers to the data being passed from a previous action ("Create Multiple Spreadsheet Rows"). It's being passed in "chunks" or batches.
 
 In essence: This part defines what list of items the loop will process. In this case, it's taking data from specific columns of the rows created in the previous step.
@@ -181,10 +171,8 @@ Choose App: "Formatter by Zapier"
 
 Transform:
 Under the "Transform" dropdown, choose "Numbers." This tells Zapier you're working with numerical data.
-
 Operation:
 Select the mathematical operation you want to perform. Choose "Add". 
-
 Values - Input:
 This is where you input the numbers you want to calculate.
 
@@ -213,7 +201,7 @@ Configure Gemini:
 
 API Version: Leave this at "Default" unless you have a specific reason to change it.
 Model: Select the Gemini model you want to use. "gemini-2.0-flash" is chosen in the example. Different models have different strengths and capabilities.
-Message: This is where you provide the input for Gemini.
+Message: This is where you provide the prompt for Gemini model.
 
 As an example use this prompt:
 ```
@@ -246,12 +234,13 @@ This step allows you to leverage the power of AI for tasks like translation, sum
 
 ### 9. Create the ChatGPT conversation in the same way as in the previous step. 
 
-Use "chatgpt-4o-latest" model. For Assistant instructions you can say something like: "you are a professional EU translator."
+Use "chatgpt-4o-latest" model for translation purposes. As Assistant instructions you can say something like: "you are a professional EU translator."
 Set "max tokens" to something like 4096. The maximum number of tokens for GPT4o is 16383.
 
 ### 10. Create Run Python action
+[Optional, but nice to have for translation purposes]
 
-This step uses Python code to process the output from the Gemini and ChatGPT conversations in the previous steps.  It allows for complex manipulation and transformation of information. In the example it cuts the bigger chunks of text to sentences for our convenience (in case of translation task!), i.e. aligns the English sentences to Lithuanian sentences.
+This step uses Python code to process the output from the Gemini and ChatGPT conversations in the previous steps.  It allows for complex manipulation and transformation of information. In the example it splits the bigger chunks of text to sentences for our convenience (in case of translation task!), i.e. aligns the English sentences to Lithuanian sentences.
 
 Here's how to configure it:
 
@@ -259,7 +248,6 @@ Choose App: "Code by Zapier"
 
 Action Event:
 The action event should be "Run Python."
-
 Input Data:
 This is where you feed data into your Python script. You'll see several fields:
 textOriginal: This contains the original text that was sent to Gemini for translation or processing.
@@ -414,21 +402,20 @@ Customize Spreadsheet:
 
 Choose Spreadsheet: Select the Google Sheet you want to update. In the example, "Vertimo_dokumentas".
 Choose Worksheet: Select the worksheet "vertimas" within that spreadsheet. 
-Find or Create Row:
-
+Create Row:
 This is a crucial step for "Update Spreadsheet Row." You need to tell Zapier which row to update. Use the variable we created with the Formatter in action 7 ("Output").
 
 Map Data to Columns:
 This is where you specify which data goes into which column of the row you're updating.
 
-Gemini, ChatGPT: These fields refer to the outputs of the Gemini and ChatGPT steps. You can map these outputs to specific columns in your sheet. Choose "Candidates Content Parts Text" for Gemini, and for "Reply" for ChatGPT.
-Original: This field refers to the original text that was processed and is already in the worksheet. Leave it blank, as we don't need to update this heading.
+-Gemini, ChatGPT: These fields refer to the outputs of the Gemini and ChatGPT steps. You can map these outputs to specific columns in your sheet. Choose "Candidates Content Parts Text" for Gemini, and for "Reply" for ChatGPT.
+-Original: This field refers to the original text that was processed and is already in the worksheet. Leave it blank, as we don't need to update this heading.
 
 Test Action:
 Click "Continue" to test the action. Zapier will attempt to find the row and update it with the provided data. Review the test results and check your spreadsheet to confirm the update was successful.
 
 ### 12. Create Google Sheets Action "Create Multiple Spreadsheet Rows"
-
+[Optional, but nice to have for translation purposes]
 This action is very similar to action 5. It takes text segments (original, Gemini translation, ChatGPT translation) from the previous Python action, and adds them as multiple rows to a Google Sheet.
 
 Here's how to set it up:
@@ -476,9 +463,9 @@ Once you've tested all the steps, set the slider "Turn Zap On" and click the "Pu
 Python Code: The most critical part is the Python code. Make sure it's accurate and handles the document content as expected.
 Data Mapping: Pay close attention to mapping the data in different steps. This ensures the correct information goes into the correct columns of your spreadsheets.
 Testing: Test each step thoroughly to catch any errors early on.
+
 Troubleshooting
 
 Zapier Help: Zapier has excellent documentation and help resources. Use the search bar if you get stuck.
 Code Errors: If your Python code isn't working, double-check the syntax and logic. Print statements can help you debug.
 Connection Issues: Make sure you're connected to the correct accounts for Google Docs and Google Sheets.
-
