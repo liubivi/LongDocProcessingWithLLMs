@@ -470,3 +470,8 @@ Troubleshooting
 Zapier Help: Zapier has excellent documentation and help resources. Use the search bar if you get stuck.
 Code Errors: If your Python code isn't working, double-check the syntax and logic. Print statements can help you debug.
 Connection Issues: Make sure you're connected to the correct accounts for Google Docs and Google Sheets.
+
+## Output examples
+
+![An example of chunked translation output](chunked_translation_Zapier.png)
+![An example of segmented translation output](segmented_translation_Zapier.png)
