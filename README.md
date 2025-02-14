@@ -472,6 +472,8 @@ Code Errors: If your Python code isn't working, double-check the syntax and logi
 Connection Issues: Make sure you're connected to the correct accounts for Google Docs and Google Sheets.
 
 ## Output examples
+The worksheet "vertimas" ("translation" in Lithuanian) shows the initial large chunks of text, as sent to LLMs.
+The worksheet "segmentai" ("segments" in Lithuanian) shows the translation text split into sentences. 
 
 ![An example of chunked translation output](chunked_translation_Zapier.png)
 ![An example of segmented translation output](segmented_translation_Zapier.png)
