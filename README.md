@@ -19,6 +19,7 @@ It starts the job when a new document is added to a Google Docs folder on a Goog
 - Create a [Google AI Studio account](https://aistudio.google.com/), and create an "API key" that will act as a sort of your password. Click a button "Get API key".
 - Create an [Open AI account](https://platform.openai.com/), and create an "API key" on Dashboard/API keys.
 - Create a [Zapier account](https://www.zapier.com/) (or log in if you already have one). Click the "Create Zap" button.
+  Start from a simplified [Zapier template.](https://zapier.com/shared/5498f7401f99e8e982bfa0e29b1de56b00e6463c), which does not include the segmenting of output into sentences.
 
 ## Step 2: Setting up the Trigger (When to start)
 
