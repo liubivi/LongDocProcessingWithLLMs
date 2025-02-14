@@ -1,5 +1,5 @@
 # LongDocProcessingWithLLMs: processing long documents with LLMs (ChatGpT, Gemini etc.) using Zapier.com automation platform
-
+![the scheme on how to automatize document splitting using Zapier](Translation_with_Zapier_ChatGPT_Gemini.png)
 This guide shows how to set up a Zapier.com process, which takes an uploaded document in Google drive and processes a long docx document in chunks using Gemini and ChatGPT LLMs and saves the results in a Google spreadsheet.
 
 This guide will walk you through creating a Zap (automated workflow) that mirrors the one in the scheme (see the image in the repository). 
