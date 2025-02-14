@@ -25,14 +25,16 @@ Click the "Create Zap" button.
 
 ### 1. New Document in Folder (Trigger)
 
-Choose App: 
-Search for and select "Google Docs."
+Choose App: "Google Docs"
+
 Trigger Event: 
 Choose "New Document in Folder." This means the Zap will start whenever a new document is added to a folder.
 Connect Account: 
 Connect your Google Docs account to Zapier. You'll need to authorize Zapier to access your Google Docs.
+
 Customize Folder: 
 Select the specific folder in your Google Docs that you want Zapier to monitor for new documents, e.g. "vertimo_originalai"
+
 Test Trigger: 
 Zapier will test the connection to ensure it can see new documents in the folder.
 
@@ -40,8 +42,8 @@ Zapier will test the connection to ensure it can see new documents in the folder
 
 ### 2. Run Python (Action)
 
-Choose App: 
-Search for and select "Code by Zapier."
+Choose App: "Code by Zapier"
+
 Action Event: 
 Choose "Run Python."
 Input Data: 
@@ -105,7 +107,8 @@ Zapier will run your Python code with sample data to ensure it works correctly.
 
 ### 3. and 4. "Create Worksheet" on our previously created Spreadsheet "Vertimo_dokumentas".
 
-Choose App: Search for and select "Google Sheets."
+Choose App: "Google Sheets"
+
 Action Event: Choose "Create Worksheet" and add the headings of the new worksheets ("new", because they will be replaced every time an action is triggered":
 
 -worksheet "vertimas"
@@ -150,18 +153,15 @@ This step is all about repeating a set of actions for each item in a list. Imagi
 
 Here's how it works:
 
-Choose App:
+Choose App: "Looping by Zapier"
 
-Zapier should automatically have "Looping by Zapier" selected. If not, search for and select "Looping by Zapier."
 Action Event:
-
 The action event should be "Create Loop From Line Items." This tells Zapier you're creating a loop to process a list of items (chunks of text in our case).
 Input - Values to Loop:
 
 This is the most crucial part. You need to tell Zapier what list to loop through.
 Set the name of the Values to Loop to "Chunks" and then chose a field "Rows COL A" from the spreadsheet "vertimas".
 
-This is a bit cryptic, but here's what it likely means:
 Chunks: This refers to the data being passed from a previous action ("Create Multiple Spreadsheet Rows"). It's being passed in "chunks" or batches.
 
 In essence: This part defines what list of items the loop will process. In this case, it's taking data from specific columns of the rows created in the previous step.
@@ -177,17 +177,17 @@ In our example, we need to add "1" to the iteration number. If our iteration is 
 
 Here's how to set it up:
 
-Choose App:
-Zapier should automatically have "Formatter by Zapier" selected. If not, search for and select it.
+Choose App: "Formatter by Zapier"
+
 Transform:
-
 Under the "Transform" dropdown, choose "Numbers." This tells Zapier you're working with numerical data.
+
 Operation:
-
 Select the mathematical operation you want to perform. Choose "Add". 
-Values - Input:
 
+Values - Input:
 This is where you input the numbers you want to calculate.
+
 Important: You can either type in numbers directly or use data from previous steps. Click the "+" button to choose data from earlier steps.
 Choose "1" and "Loop Iteration" variable from the previous step. This means:
 "1": The number 1 is being added directly.
@@ -202,8 +202,10 @@ This step uses the power of Gemini, Google's advanced AI, to have a conversation
 Here's how to set it up:
 
 Zapier should automatically have "Google AI Studio (Gemini)" selected. If not, search for and select it.
+
 Action Event:
 The action event should be "Conversation." This indicates you're using Gemini to conduct a conversation.
+
 Connect Account:
 If you haven't already connected your Google AI Studio account, you'll be prompted to do so. Click "Connect an Account" and authorize Zapier to access it. Indicate the API key you've created.
 
@@ -253,14 +255,12 @@ This step uses Python code to process the output from the Gemini and ChatGPT con
 
 Here's how to configure it:
 
-Choose App:
+Choose App: "Code by Zapier"
 
-Zapier should automatically have "Code by Zapier" selected. If not, search for and select it.
 Action Event:
-
 The action event should be "Run Python."
-Input Data:
 
+Input Data:
 This is where you feed data into your Python script. You'll see several fields:
 textOriginal: This contains the original text that was sent to Gemini for translation or processing.
 textGemini: This field holds the output from the Gemini conversation.
@@ -402,15 +402,14 @@ This step takes the output from the LLMs and uses it to update a row in a Google
 
 Here's how to configure it:
 
-Choose App:
+Choose App: "Google Sheets"
 
-Zapier should automatically have "Google Sheets" selected. If not, search for and select it.
 Action Event:
-
 The action event is "Update Spreadsheet Row." This means you're modifying an existing row, not creating a new one.
 Connect Account:
 
 If you haven't already connected your Google Sheets account, you'll be asked to. Click "Connect an Account" and authorize Zapier to access your Google Sheets.
+
 Customize Spreadsheet:
 
 Choose Spreadsheet: Select the Google Sheet you want to update. In the example, "Vertimo_dokumentas".
@@ -420,7 +419,6 @@ Find or Create Row:
 This is a crucial step for "Update Spreadsheet Row." You need to tell Zapier which row to update. Use the variable we created with the Formatter in action 7 ("Output").
 
 Map Data to Columns:
-
 This is where you specify which data goes into which column of the row you're updating.
 
 Gemini, ChatGPT: These fields refer to the outputs of the Gemini and ChatGPT steps. You can map these outputs to specific columns in your sheet. Choose "Candidates Content Parts Text" for Gemini, and for "Reply" for ChatGPT.
@@ -435,15 +433,12 @@ This action is very similar to action 5. It takes text segments (original, Gemin
 
 Here's how to set it up:
 
-Choose App:
+Choose App: "Google Sheets"
 
-Zapier should automatically have "Google Sheets" selected. If not, search for and select "Google Sheets."
-Action Event:
-
-The action event should be "Create Multiple Spreadsheet Rows."
+Action Event: "Create Multiple Spreadsheet Rows."
 Connect Account:
-
 If you haven't already connected your Google Sheets account, you'll be prompted to. Click "Connect an Account" and authorize Zapier to access your Google Sheets.
+
 Customize Spreadsheet:
 
 Choose Spreadsheet: Select the Google Sheet where you want to add the rows ("Vertimo dokumentas" in the example).
@@ -466,8 +461,8 @@ This action is designed to simply wait before the Zap continues with the next it
 
 Here's how to set it up:
 
-Choose App "Delay by Zapier."
-Action Event: "Delay For."
+Choose App "Delay by Zapier"
+Action Event: "Delay For"
 Set Delay:
 Time Delayed For (value): Enter the numerical value for the delay, e.g. "0.05".
 Time Delayed For (unit): Select the unit of time for the delay. Choose "Minutes".
@@ -476,7 +471,7 @@ Click "Continue" to test the action. Zapier will immediately proceed to the next
 
 ## Step 4: Turn on Your Zap
 
-Once you've tested all the steps, set the slider "Tur Zap On" and click the "Publish" button. Your Zap is now active!
+Once you've tested all the steps, set the slider "Turn Zap On" and click the "Publish" button. Your Zap is now active!
 
 Python Code: The most critical part is the Python code. Make sure it's accurate and handles the document content as expected.
 Data Mapping: Pay close attention to mapping the data in different steps. This ensures the correct information goes into the correct columns of your spreadsheets.
