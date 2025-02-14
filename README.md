@@ -12,13 +12,13 @@ It starts the job when a new document is added to a Google Docs folder on a Goog
 
 ## Step 1: Getting Started
 
--Create an account on Google (https://drive.google.com), perhaps make a separate account just for this process to avoid any personal data leaks. 
--Create a folder, e.g. "vertimo_originalai" ("originals of translations" in Lithuanian :-), in which we'll be dropping our new documents for processing, and a Google spreadsheet, e.g. "Vertimo_dokumentas" ("translated document"), in which we'll store the results. Create two worksheets there: "vertimas" ("translation" in Lithuanian) and "segmentai" ("segments" in Lithuanian)
+- Create an account on Google (https://drive.google.com), perhaps make a separate account just for this process to avoid any personal data leaks. 
+- Create a folder, e.g. "vertimo_originalai" ("originals of translations" in Lithuanian :-), in which we'll be dropping our new documents for processing, and a Google spreadsheet, e.g. "Vertimo_dokumentas" ("translated document"), in which we'll store the results. Create two worksheets there: "vertimas" ("translation" in Lithuanian) and "segmentai" ("segments" in Lithuanian)
 
--Create a Google AI Studio account, and create an "API key" that will act as a sort of your password. Click a button "Get API key".
--Create a https://platform.openai.com/ account, and create an "API key" on Dashboard/API keys.
+- Create a Google AI Studio account, and create an "API key" that will act as a sort of your password. Click a button "Get API key".
+- Create a https://platform.openai.com/ account, and create an "API key" on Dashboard/API keys.
 
--Create an account on Zapier.com (or log in if you already have one).
+- Create an account on Zapier.com (or log in if you already have one).
 Click the "Create Zap" button.
 
 ## Step 2: Setting up the Trigger (When to start)
@@ -449,9 +449,9 @@ This is where you tell Zapier which pieces of data go into which columns.
 Rows: This field is crucial for handling multiple rows. You'll have to indicate four variables from action No. 10 (Python code):
 
 -No: "Chunk Count" variable: This field is related to the loop count from Step 10. It is used to track and identify the rows being added. This code will allow us to sort the rows in the spreadsheet in correct order, because the chunks are not necessarily processed in sequence(!). A later chunk can be inserted in the spreadsheet earlier than the previous chunk.
--Original: "Original Segments" from Python action No. 10.
--Gemini: "Gemini Segments" from Python action No. 10.
--ChatGPT: "Chatgpt Segments" from Python action No. 10.
+- Original: "Original Segments" from Python action No. 10.
+- Gemini: "Gemini Segments" from Python action No. 10.
+- ChatGPT: "Chatgpt Segments" from Python action No. 10.
 
 Test Action: Once you've mapped the data, click "Continue" to test. Zapier will add the rows to your sheet.
 
