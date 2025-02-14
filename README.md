@@ -247,7 +247,7 @@ This step allows you to leverage the power of AI for tasks like translation, sum
 ### 9. Create the ChatGPT conversation in the same way as in the previous step. 
 
 Use "chatgpt-4o-latest" model. For Assistant instructions you can say something like: "you are a professional EU translator."
-Set "max tokens" to 4096.
+Set "max tokens" to something like 4096. The maximum number of tokens for GPT4o is 16383.
 
 ### 10. Create Run Python action
 
