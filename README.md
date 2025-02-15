@@ -479,3 +479,45 @@ The worksheet "segmentai" ("segments" in Lithuanian) shows the translation text 
 
 ![An example of chunked translation output](chunked_translation_Zapier.png)
 ![An example of segmented translation output](segmented_translation_Zapier.png)
+
+## Potential improvements
+A known problem with this application is that there is no context passing from one large chunk to another. As a result, text_chunk No. 1 can use one term (e.g. 'supplier'), and text_chunk No. 2 can use another (e.g. 'contractor'). For that, you need to add some kind of context from the previous segment to the next, in order not lose the important contextual details.
+
+One technique would be just summarizing the entire document and add it to each chunk of the text. You would need to add a summarization step.
+In the example, I've created another worksheet "santrauka" ("summary" in Lithuanian), where I store the summary of the entire document and later I supply it to the Gemini and ChatGPT document processing actions.
+
+![summarization part diagram](summarization_part.png)
+
+Of course, you have to use another prompt, which includes summmarization. For example:
+````
+Jūs esate profesionalus Europos Komisijos vertėjas, atsakingas už tekstų vertimą iš anglų į lietuvių kalbą. Jūsų tikslas – pateikti aukštos kokybės vertimus, kurie būtų tikslūs, atitiktų kontekstą ir būtų gramatiškai suderinti tarp atskirų sakinių.
+
+#Gairės
+-Užtikrinkite, kad visi vertimai išlaikytų originalaus dokumento prasmę ir intenciją.
+-Pritaikykite vertimą prie lietuvių kalbos ir kultūros normų.
+-Išsaugokite techninę terminologiją ir faktinę informaciją.
+-Peržiūrėkite vertimą, kad jis būtų gramatiškai taisyklingas ir sklandus.
+
+#Veiksmai
+1.Atidžiai perskaitykite originalų tekstą anglų kalba bei jo santrauką lietuvių kalba, kad suprastumėte jo kontekstą ir prasmę.
+2.Išverskite tekstą į lietuvių kalbą, pritaikydami jį kultūriniam ir lingvistiniam kontekstui.
+3.Patikrinkite vertimo tikslumą, užtikrindami, kad jis išlaikytų pradinį kontekstą ir niuansus.
+4.Pakoreguokite vertimą, kad jis būtų gramatiškai taisyklingas ir stilistiškai tinkamas lietuvių kalboje.
+
+#Santrauka, kuri jums suteiks konteksto apie verčiamą dokumentą:
+```
+{{281023746__response__content}} <- The output from the summarization action
+```
+#Išverskite šį tekstą į lietuvių kalbą ir pateikite tik jį, be jokių komentarų:
+```
+{{281023529__Chunks}} <- The output from the python chunking action
+```
+````
+
+## Formatting the output Google spreadsheet
+Instead of formatting the output spreadsheet manually, use Google Apps script.
+An example of such a script is presented in the [plain text file Format_output_spreadsheet.gs](Format_output_spreadsheet.gs). 
+Note that it makes references to the worksheet "santrauka", because in addition to the translation actions, I'm also supplying the summary of the uploaded document as a context and store it in that spreadsheet (see potential improvements above). If you don't use summarization, simply create such a worksheet in your output spreadsheet before using the Google app script.
+
+For running the Google macro, just create a new macro under "Extensions/Macros/Manage macros" from Google spreadsheet menu and assign it a keyboard shortcut for convenience (Ctrl+Alt+Shift+1):
+![Running Google macro screenshot](google_macro_example.png)
